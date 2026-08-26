@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>TACHS Admin Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================
+   RESET
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4fbff;
+    display:flex;
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar{
+    width:260px;
+    min-height:100vh;
+    background:#0099cc;
+    padding:30px 20px;
+    color:white;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li{
+    margin:20px 0;
+}
+
+.sidebar ul li a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+    display:block;
+    padding:12px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.sidebar ul li a:hover{
+    background:rgba(255,255,255,0.2);
+}
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.main{
+    flex:1;
+    padding:40px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.topbar h1{
+    color:#0099cc;
+}
+
+.admin-boxes{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.box{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.box:hover{
+    transform:translateY(-8px);
+}
+
+.box h3{
+    color:#0099cc;
+    margin-bottom:10px;
+}
+
+.box p{
+    color:#555;
+}
+
+/* =========================================
+   ANNOUNCEMENT PANEL
+========================================= */
+
+.announcement-panel{
+    margin-top:50px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.announcement-panel h2{
+    margin-bottom:20px;
+    color:#0099cc;
+}
+
+.announcement-panel input,
+.announcement-panel textarea,
+.announcement-panel select{
+    width:100%;
+    margin:15px 0;
+    padding:15px;
+    border:none;
+    background:#f4fbff;
+    border-radius:12px;
+    outline:none;
+    font-size:16px;
+}
+
+.announcement-panel button{
+    padding:15px 30px;
+    border:none;
+    border-radius:30px;
+    background:#00aaff;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+    margin-top:10px;
+}
+
+.announcement-panel button:hover{
+    background:#0099cc;
+}
+
+/* =========================================
+   POSTS
+========================================= */
+
+.posts{
+    margin-top:30px;
+}
+
+.post{
+    background:#f4fbff;
+    padding:20px;
+    border-radius:15px;
+    margin-top:20px;
+    position:relative;
+}
+
+.post h3{
+    color:#0099cc;
+    margin-bottom:10px;
+}
+
+.post p{
+    margin-bottom:15px;
+    color:#444;
+}
+
+.post small{
+    color:gray;
+    display:block;
+    margin-top:10px;
+}
+
+/* DELETE BUTTON */
+
+.deleteBtn{
+    background:red;
+    color:white;
+    border:none;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
+}
+
+/* TOP ROW */
+
+.post-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+/* =========================================
+   SETTINGS PANEL
+========================================= */
+
+.settings-panel{
+    margin-top:50px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.settings-panel h2{
+    color:#0099cc;
+    margin-bottom:25px;
+}
+
+.setting-group{
+    margin-bottom:25px;
+}
+
+.setting-group label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:600;
+    color:#333;
+}
+
+.setting-group input,
+.setting-group textarea{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#f4fbff;
+    border-radius:12px;
+    outline:none;
+    font-size:16px;
+}
+
+.toggle-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.toggle-row input{
+    width:25px;
+    height:25px;
+}
+
+#saveSettingsBtn{
+    padding:15px 30px;
+    border:none;
+    border-radius:30px;
+    background:#00aaff;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+#saveSettingsBtn:hover{
+    background:#0099cc;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        min-height:auto;
+    }
+
+}
+/* =========================================
+   PAGE TRANSITION LOADER
+========================================= */
+
+#pageLoader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(135deg,#0099cc,#00ccff);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+transition:0.7s;
+opacity:1;
+visibility:visible;
+}
+
+.transition-content{
+text-align:center;
+color:white;
+}
+
+.transition-logo{
+width:120px;
+height:120px;
+border-radius:50%;
+background:white;
+color:#0099cc;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:60px;
+margin:auto;
+animation:pulseLogo 1.5s infinite;
+box-shadow:0 0 40px rgba(255,255,255,0.5);
+}
+
+.transition-content h1{
+margin-top:25px;
+font-size:50px;
+letter-spacing:2px;
+}
+
+.transition-content p{
+margin-top:10px;
+font-size:18px;
+opacity:0.9;
+}
+
+/* ANIMATION */
+
+@keyframes pulseLogo{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.1);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+:root{
+    --main-color:#00aaff;
+    --bg-color:#eef7ff;
+}
+
+.dark-mode{
+    background:#111;
+    color:white;
+}
+#loginScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(135deg,#0099cc,#00aaff);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.login-box{
+background:white;
+padding:40px;
+border-radius:20px;
+width:320px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.login-box h2{
+text-align:center;
+margin-bottom:20px;
+color:#0099cc;
+}
+
+.login-box input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+background:#f4fbff;
+border-radius:10px;
+outline:none;
+}
+
+.login-box button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#00aaff;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.login-box button:hover{
+background:#0099cc;
+}
+
+.error{
+color:red;
+text-align:center;
+margin-top:10px;
+font-size:14px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>🎓 TACHS Admin</h2>
+
+<ul>
+
+<li><a href="#">Dashboard</a></li>
+<li><a href="Announcements.html">Announcements</a></li>
+<li><a href="report.html">Students</a></li>
+<li><a href="results2.html">Results</a></li>
+<li><a href="School.html">Home</a></li>
+<li><a href="Settings.html">Settings</a></li>
+
+</ul>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="topbar">
+
+<h1>Admin Dashboard</h1>
+
+<p>Welcome Admin 👋</p>
+
+</div>
+
+<!-- BOXES -->
+
+<div class="admin-boxes">
+
+<div class="box">
+<h3>Students</h3>
+<p>1,250 Registered Students</p>
+</div>
+
+<div class="box">
+<h3>Teachers</h3>
+<p>75 Active Teachers</p>
+</div>
+
+<div class="box">
+<h3>Announcements</h3>
+<p>Live Announcement System</p>
+</div>
+
+<div class="box">
+<h3>Results</h3>
+<p>Latest Exams Uploaded</p>
+</div>
+
+</div>
+
+<!-- ANNOUNCEMENT PANEL -->
+
+<div class="announcement-panel">
+
+<h2>📢 Post Announcement</h2>
+
+<input
+type="text"
+id="announcementTitle"
+placeholder="Announcement Title">
+
+<textarea
+id="announcementMessage"
+rows="5"
+placeholder="Write announcement..."></textarea>
+
+<input
+type="number"
+id="expireValue"
+placeholder="Enter time">
+
+<select id="expireType">
+
+<option value="seconds">
+Seconds
+</option>
+
+<option value="minutes">
+Minutes
+</option>
+
+<option value="hours">
+Hours
+</option>
+
+</select>
+
+<button id="postBtn">
+Post Announcement
+</button>
+
+<button id="clearBtn">
+Clear All Announcements
+</button>
+
+<!-- POSTS -->
+
+<div class="posts" id="posts"></div>
+
+</div>
+
+<!-- SETTINGS PANEL -->
+
+<div class="settings-panel">
+
+<h2>⚙️ Website Settings</h2>
+
+<div class="setting-group">
+
+<label>School Name</label>
+
+<input
+type="text"
+id="schoolName"
+placeholder="Enter school name">
+
+</div>
+
+<div class="setting-group">
+
+<label>Website Theme Color</label>
+
+<input
+type="color"
+id="themeColor"
+value="#0099cc">
+
+</div>
+
+<div class="setting-group">
+
+<label>Admin Password</label>
+
+<input
+type="password"
+id="adminPassword"
+placeholder="New password">
+
+</div>
+
+<div class="setting-group">
+
+<label>Homepage Banner Text</label>
+
+<textarea
+id="bannerText"
+rows="4"
+placeholder="Write homepage banner text..."></textarea>
+
+</div>
+<!-- 🔐 LOGIN -->
+<div id="loginScreen">
+<div class="login-box">
+<h2>Admin Login</h2>
+<input type="text" id="user" placeholder="Username">
+<input type="password" id="pass" placeholder="Password">
+<button onclick="login()">Login</button>
+<div class="error" id="error"></div>
+</div>
+</div>
+<div class="setting-group toggle-row">
+
+<label>Enable Dark Mode</label>
+
+<input
+type="checkbox"
+id="darkMode">
+
+</div>
+
+<div class="setting-group toggle-row">
+
+<label>Auto Delete Expired Announcements</label>
+
+<input
+type="checkbox"
+id="autoDelete"
+checked>
+
+</div>
+
+<button id="saveSettingsBtn">
+💾 Save Settings
+</button>
+
+</div>
+
+</div>
+<!-- PAGE TRANSITION LOADER -->
+
+<div id="pageLoader">
+
+<div class="transition-content">
+
+<div class="transition-logo">
+🎓
+</div>
+
+<h1>TACHS</h1>
+
+<p>Loading Page...</p>
+
+</div>
+
+</div>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+serverTimestamp,
+getDocs,
+deleteDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAc902MiJ9mCbTQcJg_ViFGw0AWzi_lAvw",
+
+authDomain: "tachs-portal.firebaseapp.com",
+
+projectId: "tachs-portal",
+
+storageBucket: "tachs-portal.firebasestorage.app",
+
+messagingSenderId: "124149961599",
+
+appId: "1:124149961599:web:d175ec26571c0ce12f404a",
+
+measurementId: "G-DDPQHC3N85"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// =========================================
+// ELEMENTS
+// =========================================
+
+const postBtn =
+document.getElementById("postBtn");
+
+const clearBtn =
+document.getElementById("clearBtn");
+
+const posts =
+document.getElementById("posts");
+
+const titleInput =
+document.getElementById("announcementTitle");
+
+const messageInput =
+document.getElementById("announcementMessage");
+
+const expireValueInput =
+document.getElementById("expireValue");
+
+const expireTypeInput =
+document.getElementById("expireType");
+
+const saveSettingsBtn =
+document.getElementById("saveSettingsBtn");
+
+const darkModeToggle =
+document.getElementById("darkMode");
+
+// =========================================
+// POST ANNOUNCEMENT
+// =========================================
+
+postBtn.addEventListener("click", async () => {
+
+const title =
+titleInput.value.trim();
+
+const message =
+messageInput.value.trim();
+
+const expireValue =
+Number(expireValueInput.value);
+
+const expireType =
+expireTypeInput.value;
+
+if(!title || !message || !expireValue){
+
+alert("Please fill all fields");
+
+return;
+
+}
+
+const now = Date.now();
+
+let expireTime;
+
+if(expireType === "seconds"){
+
+expireTime =
+now + expireValue * 1000;
+
+}
+else if(expireType === "minutes"){
+
+expireTime =
+now + expireValue * 60000;
+
+}
+else{
+
+expireTime =
+now + expireValue * 3600000;
+
+}
+
+// =========================================
+// SAVE TO FIREBASE
+// =========================================
+
+const docRef =
+await addDoc(
+collection(db,"announcements"),
+{
+title,
+message,
+createdAt: serverTimestamp(),
+expiresAt: expireTime
+}
+);
+
+// =========================================
+// CREATE POST
+// =========================================
+
+const post =
+document.createElement("div");
+
+post.classList.add("post");
+
+post.dataset.id = docRef.id;
+
+post.innerHTML = `
+
+<div class="post-top">
+
+<h3>${title}</h3>
+
+<button class="deleteBtn">
+✖
+</button>
+
+</div>
+
+<p>${message}</p>
+
+<div style="
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:10px;
+flex-wrap:wrap;
+">
+
+<span style="
+background:#00cc66;
+color:white;
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
+">
+
+LIVE
+
+</span>
+
+<small class="countdown">
+
+⏳ Loading timer...
+
+</small>
+
+</div>
+
+`;
+
+posts.prepend(post);
+
+// =========================================
+// DELETE BUTTON
+// =========================================
+
+post.querySelector(".deleteBtn").onclick =
+async () => {
+
+await deleteDoc(
+doc(
+db,
+"announcements",
+post.dataset.id
+)
+);
+
+post.remove();
+
+};
+
+// =========================================
+// COUNTDOWN
+// =========================================
+
+const countdown =
+post.querySelector(".countdown");
+
+async function updateCountdown(){
+
+const distance =
+expireTime - Date.now();
+
+if(distance <= 0){
+
+countdown.innerHTML =
+"❌ Expired";
+
+// CHECK AUTO DELETE
+const autoDeleteEnabled =
+document.getElementById("autoDelete").checked;
+
+if(autoDeleteEnabled){
+
+await deleteDoc(
+doc(
+db,
+"announcements",
+post.dataset.id
+)
+);
+
+}
+
+post.remove();
+
+clearInterval(timer);
+
+return;
+
+}
+
+const h =
+Math.floor(
+distance / 3600000
+);
+
+const m =
+Math.floor(
+(distance % 3600000)
+/ 60000
+);
+
+const s =
+Math.floor(
+(distance % 60000)
+/ 1000
+);
+
+countdown.innerHTML =
+`⏳ Removes in ${h}h ${m}m ${s}s`;
+
+}
+
+updateCountdown();
+
+const timer =
+setInterval(updateCountdown,1000);
+
+// =========================================
+// CLEAR INPUTS
+// =========================================
+
+titleInput.value = "";
+
+messageInput.value = "";
+
+expireValueInput.value = "";
+
+expireTypeInput.value = "minutes";
+
+alert(
+"Announcement Posted Successfully!"
+);
+
+});
+
+// =========================================
+// CLEAR ALL
+// =========================================
+
+clearBtn.addEventListener("click", async () => {
+
+const snap =
+await getDocs(
+collection(db,"announcements")
+);
+
+snap.forEach(async d=>{
+
+await deleteDoc(
+doc(
+db,
+"announcements",
+d.id
+)
+);
+
+});
+
+posts.innerHTML = "";
+
+alert(
+"All announcements deleted!"
+);
+
+});
+
+// =========================================
+// SETTINGS SAVE
+// =========================================
+
+saveSettingsBtn.addEventListener("click",()=>{
+
+const schoolName =
+document.getElementById("schoolName").value;
+
+const themeColor =
+document.getElementById("themeColor").value;
+
+const bannerText =
+document.getElementById("bannerText").value;
+
+const darkMode =
+document.getElementById("darkMode").checked;
+
+const autoDelete =
+document.getElementById("autoDelete").checked;
+
+// CHANGE COLORS
+
+document.querySelector(".sidebar").style.background =
+themeColor;
+
+document.querySelector(".topbar h1").style.color =
+themeColor;
+
+// SAVE SETTINGS
+
+localStorage.setItem(
+"schoolName",
+schoolName
+);
+
+localStorage.setItem(
+"themeColor",
+themeColor
+);
+
+localStorage.setItem(
+"bannerText",
+bannerText
+);
+
+localStorage.setItem(
+"darkMode",
+darkMode
+);
+
+localStorage.setItem(
+"autoDelete",
+autoDelete
+);
+
+alert(`
+
+✅ Settings Saved!
+
+School Name:
+${schoolName}
+
+Theme Color:
+${themeColor}
+
+Dark Mode:
+${darkMode}
+
+Auto Delete:
+${autoDelete}
+
+`);
+
+});
+
+// =========================================
+// DARK MODE
+// =========================================
+
+darkModeToggle.addEventListener("change",()=>{
+
+if(darkModeToggle.checked){
+
+document.body.style.background =
+"#111";
+
+document.querySelectorAll(
+".box,.announcement-panel,.settings-panel,.post"
+).forEach(el=>{
+
+el.style.background =
+"#1e1e1e";
+
+el.style.color =
+"white";
+
+});
+
+document.querySelectorAll(
+".box p,.post p,.post small,.setting-group label"
+).forEach(el=>{
+
+el.style.color =
+"#ddd";
+
+});
+
+}
+else{
+
+document.body.style.background =
+"#f4fbff";
+
+document.querySelectorAll(
+".box,.announcement-panel,.settings-panel,.post"
+).forEach(el=>{
+
+el.style.background =
+"white";
+
+el.style.color =
+"black";
+
+});
+
+document.querySelectorAll(
+".box p,.post p,.post small,.setting-group label"
+).forEach(el=>{
+
+el.style.color =
+"#555";
+
+});
+
+}
+
+});
+
+// =========================================
+// LOAD SAVED SETTINGS
+// =========================================
+
+window.addEventListener("load",()=>{
+
+const savedTheme =
+localStorage.getItem("themeColor");
+
+const savedDark =
+localStorage.getItem("darkMode");
+
+if(savedTheme){
+
+document.querySelector(".sidebar").style.background =
+savedTheme;
+
+document.querySelector(".topbar h1").style.color =
+savedTheme;
+
+document.getElementById("themeColor").value =
+savedTheme;
+
+}
+
+if(savedDark === "true"){
+
+darkModeToggle.checked = true;
+
+darkModeToggle.dispatchEvent(
+new Event("change")
+);
+
+}
+
+});
+// HIDE LOADER WHEN PAGE LOADS
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+document.getElementById("pageLoader").style.opacity = "0";
+
+document.getElementById("pageLoader").style.visibility = "hidden";
+
+},800);
+
+});
+
+// SHOW LOADER WHEN CHANGING PAGE
+
+document.querySelectorAll("a").forEach(link=>{
+
+link.addEventListener("click",function(e){
+
+const href = this.getAttribute("href");
+
+if(
+href &&
+!href.startsWith("#")
+){
+
+e.preventDefault();
+
+document.getElementById("pageLoader").style.opacity = "1";
+
+document.getElementById("pageLoader").style.visibility = "visible";
+
+setTimeout(()=>{
+
+window.location.href = href;
+
+},600);
+
+}
+
+});
+
+});
+</script>
+<script>
+// 🔐 LOGIN FUNCTION
+function login(){
+const user = document.getElementById("user").value;
+const pass = document.getElementById("pass").value;
+const error = document.getElementById("error");
+
+if(user === "admin" && pass === "1234"){
+document.getElementById("loginScreen").style.display = "none";
+document.getElementById("mainApp").style.display = "block";
+}else{
+error.innerText = "❌ Wrong username or password";
+}
+}
+</script>
+</body>
+</html>

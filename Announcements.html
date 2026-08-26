@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+TACHS Announcements
+</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#eef5ff;
+color:#222;
+overflow-x:hidden;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+nav{
+width:100%;
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(10px);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 8%;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo-circle{
+width:52px;
+height:52px;
+border-radius:50%;
+background:linear-gradient(135deg,#0077ff,#00bbff);
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+font-size:24px;
+font-weight:bold;
+}
+
+.logo h2{
+font-size:32px;
+color:#0077ff;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+align-items:center;
+}
+
+nav ul li a{
+text-decoration:none;
+color:#333;
+font-weight:600;
+transition:0.3s;
+}
+
+nav ul li a:hover{
+color:#0077ff;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero{
+min-height:45vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:60px 20px;
+background:
+linear-gradient(rgba(0,0,0,0.45),
+rgba(0,0,0,0.45)),
+url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+color:white;
+}
+
+.hero-content h1{
+font-size:65px;
+margin-bottom:15px;
+}
+
+.hero-content p{
+font-size:20px;
+opacity:0.95;
+}
+
+/* =========================================
+   LIVE CLOCK
+========================================= */
+
+.clock-wrapper{
+display:flex;
+justify-content:center;
+margin-top:-40px;
+position:relative;
+z-index:20;
+}
+
+.live-clock{
+background:white;
+padding:18px 35px;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+text-align:center;
+min-width:320px;
+}
+
+#clock{
+font-size:38px;
+font-weight:700;
+color:#0077ff;
+}
+
+#date{
+margin-top:5px;
+font-size:15px;
+color:#666;
+}
+
+/* =========================================
+   ANNOUNCEMENTS
+========================================= */
+
+.section-title{
+text-align:center;
+padding:70px 20px 20px;
+}
+
+.section-title h2{
+font-size:48px;
+color:#0077ff;
+margin-bottom:10px;
+}
+
+.section-title p{
+color:#666;
+font-size:18px;
+}
+
+.announcement-container{
+padding:40px 10%;
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+}
+
+.announcement-card{
+background:white;
+padding:35px;
+border-radius:28px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+position:relative;
+transition:0.3s;
+overflow:hidden;
+}
+
+.announcement-card:hover{
+transform:translateY(-8px);
+}
+
+.announcement-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:6px;
+background:linear-gradient(135deg,#0077ff,#00bbff);
+}
+
+.announcement-tag{
+position:absolute;
+top:20px;
+right:20px;
+background:linear-gradient(135deg,#0077ff,#00bbff);
+color:white;
+padding:7px 15px;
+border-radius:30px;
+font-size:12px;
+font-weight:600;
+}
+
+.announcement-card h3{
+margin:20px 0 15px;
+font-size:28px;
+color:#0077ff;
+}
+
+.announcement-card p{
+color:#555;
+line-height:1.9;
+font-size:16px;
+}
+
+.timer-box{
+margin-top:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 18px;
+border-radius:18px;
+background:#f4f8ff;
+}
+
+.timer{
+font-weight:600;
+color:#0077ff;
+}
+
+.admin-text{
+margin-top:18px;
+display:block;
+color:#888;
+font-size:14px;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer{
+margin-top:70px;
+background:linear-gradient(135deg,#0077ff,#00bbff);
+color:white;
+text-align:center;
+padding:35px;
+}
+
+/* =========================================
+   PAGE LOADER
+========================================= */
+
+#pageLoader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(135deg,#0077ff,#00bbff);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+transition:0.7s;
+opacity:1;
+visibility:visible;
+}
+
+.transition-content{
+text-align:center;
+color:white;
+}
+
+.transition-logo{
+width:120px;
+height:120px;
+border-radius:50%;
+background:white;
+color:#0077ff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:60px;
+margin:auto;
+animation:pulseLogo 1.5s infinite;
+box-shadow:0 0 40px rgba(255,255,255,0.5);
+}
+
+.transition-content h1{
+margin-top:25px;
+font-size:50px;
+letter-spacing:2px;
+}
+
+.transition-content p{
+margin-top:10px;
+font-size:18px;
+opacity:0.9;
+}
+
+@keyframes pulseLogo{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.1);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:900px){
+
+nav{
+flex-direction:column;
+gap:20px;
+}
+
+nav ul{
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
+
+.hero-content h1{
+font-size:42px;
+}
+
+.live-clock{
+min-width:90%;
+}
+
+.section-title h2{
+font-size:35px;
+}
+
+}
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+:root{
+--main-color:#00aaff;
+--bg-color:#eef7ff;
+}
+
+.dark-mode{
+background:#111;
+color:white;
+}
+
+.dark-mode nav,
+.dark-mode .announcement-card,
+.dark-mode .live-clock{
+background:#1b1b1b;
+color:white;
+}
+
+.dark-mode .announcement-card p,
+.dark-mode #date,
+.dark-mode .admin-text{
+color:#bbb;
+}
+
+.dark-mode .timer-box{
+background:#222;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+
+<div class="logo-circle">
+🎓
+</div>
+
+<h2>TACHS</h2>
+
+</div>
+
+<ul>
+
+<li><a href="School.html">Home</a></li>
+
+<li><a href="About.html">About</a></li>
+
+<li><a href="Academics.html">Academics</a></li>
+
+<li><a href="results2.html">Results</a></li>
+
+<li><a href="Settings.html">Settings</a></li>
+
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+📢 School Announcements
+</h1>
+
+<p>
+Stay updated with the latest news and important school information
+</p>
+
+</div>
+
+</section>
+
+<!-- CLOCK -->
+
+<div class="clock-wrapper">
+
+<div class="live-clock">
+
+<div id="clock">
+00:00:00
+</div>
+
+<div id="date">
+Loading date...
+</div>
+
+</div>
+
+</div>
+
+<!-- TITLE -->
+
+<section class="section-title">
+
+<h2>
+Latest Announcements
+</h2>
+
+<p>
+Live updates directly from the TACHS Admin Panel
+</p>
+
+</section>
+
+<!-- ANNOUNCEMENTS -->
+
+<div
+class="announcement-container"
+id="announcementContainer">
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+© 2026 The Apostolic Comprehensive High School
+</p>
+
+</footer>
+
+<!-- PAGE TRANSITION LOADER -->
+
+<div id="pageLoader">
+
+<div class="transition-content">
+
+<div class="transition-logo">
+🎓
+</div>
+
+<h1>TACHS</h1>
+
+<p>Loading Page...</p>
+
+</div>
+
+</div>
+
+<script type="module">
+   
+document.addEventListener("keydown", function(event) {
+
+    // Shift + Q
+    if (event.shiftKey && event.key.toLowerCase() === "q") {
+
+        event.preventDefault(); // Stops browser shortcuts if any
+
+        window.location.href = "admin.html";
+
+    }
+
+});
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+getFirestore,
+collection,
+onSnapshot,
+deleteDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAc902MiJ9mCbTQcJg_ViFGw0AWzi_lAvw",
+authDomain: "tachs-portal.firebaseapp.com",
+projectId: "tachs-portal",
+storageBucket: "tachs-portal.firebasestorage.app",
+messagingSenderId: "124149961599",
+appId: "1:124149961599:web:d175ec26571c0ce12f404a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const container = document.getElementById("announcementContainer");
+const loader = document.getElementById("pageLoader");
+
+/* 🔥 FORCE LOADER SAFETY TIMEOUT (IMPORTANT FIX) */
+setTimeout(() => {
+if (loader) {
+loader.style.opacity = "0";
+loader.style.visibility = "hidden";
+}
+}, 3000);
+
+/* show loading text */
+container.innerHTML = "<p style='text-align:center'>Loading announcements...</p>";
+
+const ref = collection(db, "announcements");
+
+let loadedOnce = false;
+
+onSnapshot(
+ref,
+(snapshot) => {
+
+loadedOnce = true;
+
+/* HIDE LOADER ON FIRST SUCCESS */
+if (loader) {
+loader.style.opacity = "0";
+loader.style.visibility = "hidden";
+}
+
+container.innerHTML = "";
+
+if (!snapshot || snapshot.empty) {
+container.innerHTML = "<p style='text-align:center;color:#666'>No announcements yet</p>";
+return;
+}
+
+let items = [];
+
+snapshot.forEach((docSnap) => {
+const data = docSnap.data();
+
+if (!data) return;
+if (!data.title || !data.message) return;
+
+let expiresAt = Number(data.expiresAt);
+if (isNaN(expiresAt)) return;
+
+items.push({
+id: docSnap.id,
+title: data.title,
+message: data.message,
+expiresAt
+});
+});
+
+items.sort((a, b) => b.expiresAt - a.expiresAt);
+
+items.forEach((data) => {
+
+const card = document.createElement("div");
+card.classList.add("announcement-card");
+
+card.innerHTML = `
+<span class="announcement-tag">LIVE</span>
+<h3>${data.title}</h3>
+<p>${data.message}</p>
+
+<div class="timer-box">
+<small class="timer">Loading...</small>
+</div>
+
+<small class="admin-text">Posted from Admin Panel</small>
+`;
+
+container.appendChild(card);
+
+const timer = card.querySelector(".timer");
+
+function update() {
+
+const dist = data.expiresAt - Date.now();
+
+if (dist <= 0) {
+timer.innerHTML = "❌ Expired";
+deleteDoc(doc(db, "announcements", data.id));
+card.remove();
+clearInterval(loop);
+return;
+}
+
+timer.innerHTML =
+`⏳ ${Math.floor(dist/3600000)}h ${Math.floor((dist%3600000)/60000)}m ${Math.floor((dist%60000)/1000)}s`;
+}
+
+update();
+const loop = setInterval(update, 1000);
+
+});
+
+},
+(error) => {
+
+console.error("FIREBASE ERROR:", error);
+
+/* IMPORTANT: STILL REMOVE LOADER */
+if (loader) {
+loader.style.opacity = "0";
+loader.style.visibility = "hidden";
+}
+
+container.innerHTML = `
+<p style="color:red;text-align:center">
+Firebase failed to load. Check console (F12)
+</p>`;
+}
+);
+function updateClock(){
+
+const now = new Date();
+
+/* FIXED TIME FORMAT (stable + always updates cleanly) */
+const time = now.toLocaleTimeString("en-GB", {
+hour: "2-digit",
+minute: "2-digit",
+second: "2-digit",
+hour12: false
+});
+
+const date = now.toLocaleDateString("en-US", {
+weekday: "long",
+year: "numeric",
+month: "long",
+day: "numeric"
+});
+
+document.getElementById("clock").textContent = time;
+
+document.getElementById("date").textContent =
+date + " | Cameroon Time";
+}
+
+/* IMPORTANT: force immediate run */
+updateClock();
+
+/* stable interval (prevents lag issues) */
+setInterval(updateClock, 1000);
+</script>
+
+</body>
+
+</html>

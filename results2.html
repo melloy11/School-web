@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACHS Results Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+:root{
+    --main-color:#1e73ff;
+    --bg-color:#eef5ff;
+    --dark:#0f172a;
+}
+
+body{
+    background:var(--bg-color);
+    min-height:100vh;
+    overflow-x:hidden;
+    color:#222;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+nav{
+    width:100%;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 20px rgba(0,0,0,0.08);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-circle{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1e73ff,#00bfff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo h2{
+    color:#165ec9;
+    font-size:30px;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:35px;
+    align-items:center;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:#222;
+    font-weight:600;
+    transition:0.3s;
+    font-size:15px;
+}
+
+nav ul li a:hover{
+    color:var(--main-color);
+}
+
+.settings-btn{
+    background:linear-gradient(135deg,#1e73ff,#006eff);
+    color:white !important;
+    padding:12px 22px;
+    border-radius:14px;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero{
+    width:100%;
+    padding:90px 20px 120px;
+    background:
+    linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
+    url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1400&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+    text-align:center;
+    color:white;
+}
+
+.hero h1{
+    font-size:65px;
+    margin-bottom:15px;
+    font-weight:700;
+}
+
+.hero p{
+    font-size:22px;
+    opacity:0.95;
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.main-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin-top:-70px;
+    padding:0 20px 60px;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    background:white;
+    padding:45px;
+    border-radius:35px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.12);
+    position:relative;
+}
+
+/* =========================================
+   TITLE
+========================================= */
+
+.portal-title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.portal-title h2{
+    font-size:42px;
+    color:#165ec9;
+    margin-bottom:10px;
+}
+
+.portal-title p{
+    color:#666;
+    font-size:17px;
+}
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.search-area{
+    position:relative;
+}
+
+.search-box{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.search-box input{
+    flex:1;
+    padding:18px 24px;
+    border:none;
+    background:#f3f7ff;
+    border-radius:18px;
+    outline:none;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.search-box input:focus{
+    box-shadow:0 0 0 4px rgba(30,115,255,0.15);
+}
+
+.search-box button{
+    padding:18px 28px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(135deg,#1e73ff,#006eff);
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.search-box button:hover{
+    transform:translateY(-2px);
+}
+
+/* =========================================
+   SUGGESTIONS
+========================================= */
+
+.suggestions{
+    background:white;
+    border-radius:18px;
+    margin-top:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+    display:none;
+    overflow:hidden;
+    position:absolute;
+    width:100%;
+    z-index:20;
+}
+
+.suggestion-item{
+    padding:16px 20px;
+    cursor:pointer;
+    border-bottom:1px solid #f0f0f0;
+    transition:0.2s;
+}
+
+.suggestion-item:hover{
+    background:#f4f8ff;
+}
+
+/* =========================================
+   RESULT BOX
+========================================= */
+
+.result-box{
+    margin-top:40px;
+    background:linear-gradient(135deg,#f5f9ff,#edf5ff);
+    padding:35px;
+    border-radius:28px;
+    display:none;
+}
+
+.student-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.student-header h2{
+    color:#165ec9;
+    font-size:34px;
+}
+
+.subjects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+}
+
+.subject{
+    background:white;
+    padding:22px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.subject h3{
+    color:#666;
+    margin-bottom:10px;
+    font-size:17px;
+}
+
+.subject p{
+    font-size:32px;
+    font-weight:700;
+    color:#1e73ff;
+}
+
+.average{
+    margin-top:35px;
+    text-align:center;
+    background:linear-gradient(135deg,#1e73ff,#006eff);
+    color:white;
+    padding:22px;
+    border-radius:22px;
+    font-size:28px;
+    font-weight:700;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.bottom-buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.bottom-buttons button{
+    padding:15px 25px;
+    border:none;
+    border-radius:16px;
+    background:white;
+    color:#1e73ff;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.bottom-buttons button:hover{
+    transform:translateY(-2px);
+}
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+.dark-mode{
+    background:#111827;
+    color:white;
+}
+
+.dark-mode nav{
+    background:#1e293b;
+}
+
+.dark-mode .container,
+.dark-mode .subject,
+.dark-mode .suggestions{
+    background:#1e293b;
+    color:white;
+}
+
+.dark-mode .search-box input{
+    background:#0f172a;
+    color:white;
+}
+
+.dark-mode .result-box{
+    background:#162033;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:900px){
+
+    nav{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:18px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .container{
+        padding:30px 20px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-box button{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+
+<div class="logo-circle">🎓</div>
+
+<h2>TACHS</h2>
+
+</div>
+
+<ul>
+
+<li><a href="School.html">Home</a></li>
+<li><a href="About.html">About</a></li>
+<li><a href="Admissions.html">Admissions</a></li>
+<li><a href="Announcements.html">Announcements</a></li>
+<li><a href="Rankings.html">Rankings</a></li>
+<li><a href="Results.html">Results</a></li>
+<li><a href="Settings.html" class="settings-btn">Settings</a></li>
+
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Student Results Portal</h1>
+
+<p>Fast • Secure • Modern</p>
+
+</section>
+
+<!-- MAIN -->
+
+<div class="main-wrapper">
+
+<div class="container">
+
+<div class="portal-title">
+
+<h2>🎓 Check Results</h2>
+
+<p>Search using Student ID or Student Name</p>
+
+</div>
+
+<div class="search-area">
+
+<div class="search-box">
+
+<input type="text" id="searchId" placeholder="Enter Student ID or Name">
+
+<button id="searchBtn">Search</button>
+
+</div>
+
+<div id="suggestionsBox" class="suggestions"></div>
+
+</div>
+
+<div class="result-box" id="resultBox">
+
+<div class="student-header">
+
+<h2 id="studentInfo"></h2>
+
+</div>
+
+<div class="subjects-grid">
+
+<div class="subject">
+<h3>Mathematics</h3>
+<p id="mathsResult"></p>
+</div>
+
+<div class="subject">
+<h3>English</h3>
+<p id="englishResult"></p>
+</div>
+
+<div class="subject">
+<h3>Science</h3>
+<p id="scienceResult"></p>
+</div>
+
+<div class="subject">
+<h3>ICT</h3>
+<p id="ictResult"></p>
+</div>
+<div class="subject">
+<h3>Physics</h3>
+<p id="physicsResult"></p>
+</div>
+
+<div class="subject">
+<h3>Chemistry</h3>
+<p id="chemistryResult"></p>
+</div>
+
+</div>
+
+<div class="average" id="averageResult"></div>
+
+</div>
+
+<div class="bottom-buttons">
+
+<button onclick="window.location.href='School.html'">
+🏠 Back Home
+</button>
+
+<button onclick="window.location.href='Rankings.html'">
+🏆 Rankings
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAc902MiJ9mCbTQcJg_ViFGw0AWzi_lAvw",
+  authDomain: "tachs-portal.firebaseapp.com",
+  projectId: "tachs-portal",
+  storageBucket: "tachs-portal.firebasestorage.app",
+  messagingSenderId: "124149961599",
+  appId: "1:124149961599:web:d175ec26571c0ce12f404a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const searchInput = document.getElementById("searchId");
+const searchBtn = document.getElementById("searchBtn");
+const resultBox = document.getElementById("resultBox");
+const suggestionsBox = document.getElementById("suggestionsBox");
+
+let studentsList = [];
+
+/* LOAD STUDENTS */
+async function loadStudents(){
+    const snapshot = await getDocs(collection(db,"results"));
+
+    studentsList = [];
+
+    snapshot.forEach(doc=>{
+        const data = doc.data();
+
+        studentsList.push({
+            name:(data.name || data.studentName || "Unknown"),
+            id:String(data.studentId || ""),
+            class:(data.class || data.studentClass || "Unknown")
+        });
+    });
+}
+
+loadStudents();
+
+/* LIVE SEARCH */
+searchInput.addEventListener("input",()=>{
+
+    const value = searchInput.value.toLowerCase().trim();
+
+    if(!value){
+        suggestionsBox.style.display = "none";
+        return;
+    }
+
+    const matches = studentsList.filter(s =>
+        s.name.toLowerCase().includes(value) ||
+        s.id.toLowerCase().includes(value)
+    );
+
+    if(matches.length === 0){
+        suggestionsBox.style.display = "none";
+        return;
+    }
+
+    suggestionsBox.style.display = "block";
+
+    suggestionsBox.innerHTML = matches.slice(0,6).map(s =>
+        `<div class="suggestion-item" data-id="${s.id}">
+            ${s.name} (${s.id})
+        </div>`
+    ).join("");
+});
+
+/* CLICK SUGGESTION */
+suggestionsBox.addEventListener("click",(e)=>{
+
+    if(e.target.classList.contains("suggestion-item")){
+
+        searchInput.value =
+        e.target.getAttribute("data-id");
+
+        suggestionsBox.style.display="none";
+
+        searchBtn.click();
+    }
+});
+
+/* SEARCH RESULTS */
+searchBtn.addEventListener("click", async ()=>{
+
+    const searchValue =
+    searchInput.value.trim().toLowerCase();
+
+    const snapshot =
+    await getDocs(collection(db,"results"));
+
+    let found = false;
+
+    snapshot.forEach(doc=>{
+
+        const data = doc.data();
+
+        const name =
+        (data.name || data.studentName || "").toLowerCase();
+
+        const id =
+        String(data.studentId || "").toLowerCase();
+
+        if(id === searchValue || name.includes(searchValue)){
+
+            found = true;
+
+            resultBox.style.display = "block";
+
+            const studentName =
+            data.name || data.studentName || "Unknown";
+
+            const studentClass =
+            data.class || data.studentClass || "Unknown";
+
+            // ✅ SAFE VALUES (IMPORTANT FIX)
+            const maths = Number(data.maths || 0);
+            const english = Number(data.english || 0);
+            const science = Number(data.science || 0);
+            const ict = Number(data.ict || 0);
+            const physics = Number(data.physics || 0);
+            const chemistry = Number(data.chemistry || 0);
+
+            document.getElementById("studentInfo").innerHTML =
+            `${studentName} (${studentClass})`;
+
+            document.getElementById("mathsResult").innerHTML = `${maths}/100`;
+            document.getElementById("englishResult").innerHTML = `${english}/100`;
+            document.getElementById("scienceResult").innerHTML = `${science}/100`;
+            document.getElementById("ictResult").innerHTML = `${ict}/100`;
+
+            // NEW SUBJECTS FIX
+            if(document.getElementById("physicsResult")){
+                document.getElementById("physicsResult").innerHTML = `${physics}/100`;
+            }
+
+            if(document.getElementById("chemistryResult")){
+                document.getElementById("chemistryResult").innerHTML = `${chemistry}/100`;
+            }
+
+            // ✅ NEW TOTAL (ALL 6 SUBJECTS)
+            const total =
+            maths + english + science + ict + physics + chemistry;
+
+            const average =
+            ((total / 6) / 100) * 20;
+
+            document.getElementById("averageResult").innerHTML =
+            `Average: ${average.toFixed(1)}/20`;
+        }
+
+    });
+
+    if(!found){
+        resultBox.style.display="none";
+        alert("Student Result Not Found");
+    }
+
+});
+
+/* SETTINGS */
+const themeMode =
+localStorage.getItem("themeMode") || "light";
+
+const fontSize =
+localStorage.getItem("fontSize") || "16px";
+
+const mainColor =
+localStorage.getItem("mainColor") || "#00aaff";
+
+const bgColor =
+localStorage.getItem("bgColor") || "#eef7ff";
+
+document.documentElement.style.setProperty("--main-color", mainColor);
+document.documentElement.style.setProperty("--bg-color", bgColor);
+
+document.body.style.background = bgColor;
+document.body.style.fontSize = fontSize;
+
+if(themeMode === "dark"){
+    document.body.classList.add("dark-mode");
+}
+
+</script>
+
+</body>
+</html>

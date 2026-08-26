@@ -1,0 +1,24 @@
+{
+    "name": "TACHS School Portal",
+    "short_name": "TACHS",
+    "description": "The Apostolic Comprehensive High School Portal",
+    "start_url": "./school.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#f5f7fb",
+    "theme_color": "#87CEEB",
+
+    "icons": [
+        {
+            "src": "./assets/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

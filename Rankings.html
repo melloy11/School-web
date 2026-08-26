@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TACHS Rankings</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --main-color:#00aaff;
+    --bg-color:#eef7ff;
+
+    --card-bg:white;
+    --text-color:#111827;
+    --nav-bg:white;
+    --table-bg:white;
+    --border-color:#e5e7eb;
+}
+
+/* GLOBAL */
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:var(--bg-color);
+color:var(--text-color);
+transition:0.3s;
+}
+
+/* DARK MODE */
+
+body.dark-mode{
+    --bg-color:#0f172a;
+    --card-bg:#1e293b;
+    --text-color:#ffffff;
+    --nav-bg:#111827;
+    --table-bg:#1e293b;
+    --border-color:#334155;
+}
+
+/* NAV */
+
+nav{
+background:var(--nav-bg);
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+nav h2{
+color:var(--main-color);
+}
+
+nav a{
+margin-left:15px;
+text-decoration:none;
+color:var(--text-color);
+font-weight:500;
+}
+
+/* HEADER */
+
+.header{
+text-align:center;
+padding:60px 20px;
+}
+
+.header h1{
+color:var(--main-color);
+font-size:45px;
+}
+
+/* TOP 3 */
+
+.top3{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:20px 10%;
+}
+
+.card{
+background:var(--card-bg);
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+transition:0.3s;
+color:var(--text-color);
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.rank{
+font-size:30px;
+color:var(--main-color);
+font-weight:bold;
+}
+
+/* TABLE */
+
+.container{
+padding:40px 10%;
+}
+
+.table-box{
+background:var(--table-bg);
+padding:20px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+overflow-x:auto;
+transition:0.3s;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+color:var(--text-color);
+}
+
+th,td{
+padding:15px;
+border-bottom:1px solid var(--border-color);
+text-align:left;
+}
+
+th{
+background:var(--main-color);
+color:white;
+}
+
+/* LOADER */
+
+#pageLoader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:var(--main-color);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+z-index:9999;
+transition:0.5s;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+.header h1{
+font-size:32px;
+}
+
+nav{
+padding:15px 5%;
+}
+
+.top3,
+.container{
+padding-left:5%;
+padding-right:5%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="pageLoader">Loading TACHS...</div>
+
+<nav>
+<h2>TACHS</h2>
+
+<div>
+<a href="School.html">Home</a>
+<a href="results2.html">Results</a>
+</div>
+
+</nav>
+
+<div class="header">
+<h1>🏆 Student Rankings</h1>
+</div>
+
+<div class="top3" id="top3"></div>
+
+<div class="container">
+
+<div class="table-box">
+
+<table>
+
+<thead>
+<tr>
+<th>Rank</th>
+<th>Name</th>
+<th>Class</th>
+<th>Average</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+onSnapshot
+}
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAc902MiJ9mCbTQcJg_ViFGw0AWzi_lAvw",
+authDomain: "tachs-portal.firebaseapp.com",
+projectId: "tachs-portal",
+storageBucket: "tachs-portal.firebasestorage.app",
+messagingSenderId: "124149961599",
+appId: "1:124149961599:web:d175ec26571c0ce12f404a",
+measurementId: "G-DDPQHC3N85"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const top3 =
+document.getElementById("top3");
+
+const tableBody =
+document.getElementById("tableBody");
+
+/* RESULTS */
+
+onSnapshot(collection(db, "results"), (snapshot) => {
+
+let students = [];
+
+snapshot.forEach((doc) => {
+
+const data = doc.data();
+
+const name =
+data.name ||
+data.studentName ||
+"Unknown";
+
+const studentClass =
+data.class ||
+data.studentClass ||
+"Unknown";
+
+let average =
+Number(data.average || 0);
+
+/* CONVERT /100 TO /20 */
+
+if(average > 20){
+
+average = (average / 100) * 20;
+
+}
+
+students.push({
+
+name,
+class: studentClass,
+average: Number(average.toFixed(1))
+
+});
+
+});
+
+/* SORT */
+
+students.sort((a,b)=>
+b.average - a.average
+);
+
+/* TOP 3 */
+
+const medals = ["🥇","🥈","🥉"];
+
+top3.innerHTML = "";
+
+students.slice(0,3).forEach((s,i)=>{
+
+const card =
+document.createElement("div");
+
+card.className = "card";
+
+card.innerHTML = `
+
+<div class="rank">
+${medals[i]} #${i + 1}
+</div>
+
+<h3>${s.name}</h3>
+
+<p>${s.class}</p>
+
+<h2>${s.average}/20</h2>
+
+`;
+
+top3.appendChild(card);
+
+});
+
+/* TABLE */
+
+tableBody.innerHTML = "";
+
+students.forEach((s,i)=>{
+
+const row =
+document.createElement("tr");
+
+row.innerHTML = `
+
+<td>${i + 1}</td>
+<td>${s.name}</td>
+<td>${s.class}</td>
+<td>${s.average}/20</td>
+
+`;
+
+tableBody.appendChild(row);
+
+});
+
+});
+
+/* LOADER */
+
+window.addEventListener("load",()=>{
+
+const loader =
+document.getElementById("pageLoader");
+
+setTimeout(()=>{
+
+loader.style.opacity = "0";
+
+setTimeout(()=>{
+
+loader.style.display = "none";
+
+},500);
+
+},800);
+
+});
+
+/* =========================
+   SETTINGS SYSTEM
+========================= */
+
+const themeMode =
+localStorage.getItem("themeMode") || "light";
+
+const fontSize =
+localStorage.getItem("fontSize") || "16px";
+
+const mainColor =
+localStorage.getItem("mainColor") || "#00aaff";
+
+const cardStyle =
+localStorage.getItem("cardStyle") || "rounded";
+
+const animations =
+localStorage.getItem("animations") || "on";
+
+const reduceMotion =
+localStorage.getItem("reduceMotion") || "off";
+
+/* APPLY SETTINGS */
+
+document.documentElement
+.style
+.setProperty("--main-color", mainColor);
+
+document.body.style.fontSize =
+fontSize;
+
+/* DARK MODE */
+
+if(themeMode === "dark"){
+
+document.body.classList.add("dark-mode");
+
+}
+
+/* CARD STYLE */
+
+if(cardStyle === "square"){
+
+document.querySelectorAll(
+".card,.table-box"
+).forEach(el=>{
+
+el.style.borderRadius = "0px";
+
+});
+
+}
+
+/* ANIMATIONS */
+
+if(animations === "off"){
+
+document.querySelectorAll("*")
+.forEach(el=>{
+
+el.style.transition = "none";
+el.style.animation = "none";
+
+});
+
+}
+
+/* REDUCE MOTION */
+
+if(reduceMotion === "on"){
+
+document.documentElement.style.scrollBehavior = "auto";
+
+}else{
+
+document.documentElement.style.scrollBehavior = "smooth";
+
+}
+document.addEventListener("keydown",(event)=>{
+
+if(event.shiftKey && event.key.toLowerCase()==="q"){
+
+window.location.href = "Results-Admin.html";
+
+}
+
+});
+</script>
+
+</body>
+</html>

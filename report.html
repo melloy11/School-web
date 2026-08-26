@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Official Report Card</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#eef5ff;
+padding:30px;
+color:#222;
+overflow-x:hidden;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+nav{
+width:100%;
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(10px);
+padding:18px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-radius:25px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+margin-bottom:30px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo-circle{
+width:50px;
+height:50px;
+border-radius:50%;
+background:linear-gradient(135deg,#0077ff,#00bbff);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+color:white;
+font-weight:bold;
+}
+
+.logo h2{
+color:#0077ff;
+font-size:30px;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+gap:30px;
+align-items:center;
+}
+
+nav ul li a{
+text-decoration:none;
+color:#333;
+font-weight:600;
+transition:0.3s;
+}
+
+nav ul li a:hover{
+color:#0077ff;
+}
+
+/* =========================================
+   SEARCH BOX
+========================================= */
+
+.search-box{
+max-width:1100px;
+margin:auto auto 30px;
+background:white;
+padding:35px;
+border-radius:30px;
+box-shadow:0 10px 35px rgba(0,0,0,0.08);
+}
+
+.search-title{
+font-size:38px;
+font-weight:700;
+color:#0077ff;
+margin-bottom:10px;
+}
+
+.search-sub{
+color:#666;
+margin-bottom:25px;
+font-size:17px;
+}
+
+.search-area{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.search-area input{
+flex:1;
+min-width:250px;
+padding:18px 20px;
+border:none;
+background:#f4f8ff;
+border-radius:18px;
+font-size:16px;
+outline:none;
+transition:0.3s;
+}
+
+.search-area input:focus{
+background:white;
+box-shadow:0 0 0 3px rgba(0,119,255,0.15);
+}
+
+.search-area button{
+padding:18px 30px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,#0077ff,#00bbff);
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.search-area button:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 20px rgba(0,119,255,0.25);
+}
+
+.home-btn{
+background:linear-gradient(135deg,#00b85c,#00d977)!important;
+}
+
+/* =========================================
+   REPORT CARD
+========================================= */
+
+.report{
+max-width:1100px;
+margin:auto;
+background:white;
+border-radius:35px;
+overflow:hidden;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+display:none;
+animation:fadeIn 0.5s ease;
+}
+
+/* HEADER */
+
+.header{
+background:
+linear-gradient(rgba(0,0,0,0.35),
+rgba(0,0,0,0.35)),
+url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+padding:45px;
+display:flex;
+align-items:center;
+gap:25px;
+color:white;
+}
+
+.pfp{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid white;
+box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+.info h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.info p{
+font-size:18px;
+opacity:0.95;
+}
+
+/* TABLE */
+
+.table-container{
+padding:35px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+overflow:hidden;
+border-radius:20px;
+}
+
+th{
+background:linear-gradient(135deg,#0077ff,#00bbff);
+color:white;
+font-size:16px;
+}
+
+th,td{
+padding:18px;
+text-align:center;
+border-bottom:1px solid #eef2ff;
+}
+
+tr:hover{
+background:#f7fbff;
+}
+
+.subject-name{
+font-weight:600;
+color:#0077ff;
+}
+
+/* SUMMARY */
+
+.summary{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:0 35px 35px;
+}
+
+.box{
+background:#f7fbff;
+padding:30px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.box h3{
+color:#0077ff;
+margin-bottom:15px;
+font-size:20px;
+}
+
+.big{
+font-size:36px;
+font-weight:700;
+color:#111;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+nav{
+flex-direction:column;
+gap:20px;
+}
+
+nav ul{
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
+
+.header{
+flex-direction:column;
+text-align:center;
+}
+
+.info h1{
+font-size:30px;
+}
+
+.search-title{
+font-size:28px;
+}
+
+.search-area{
+flex-direction:column;
+}
+
+.search-area button{
+width:100%;
+}
+
+}
+
+/* DARK MODE */
+
+:root{
+--main-color:#00aaff;
+--bg-color:#eef7ff;
+}
+
+.dark-mode{
+background:#111;
+color:white;
+}
+
+.dark-mode nav,
+.dark-mode .search-box,
+.dark-mode .report,
+.dark-mode .box{
+background:#1b1b1b;
+color:white;
+}
+
+.dark-mode input{
+background:#2a2a2a!important;
+color:white;
+}
+
+.dark-mode td{
+border-color:#2d2d2d;
+}
+
+.dark-mode tr:hover{
+background:#202020;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+
+<div class="logo-circle">
+🎓
+</div>
+
+<h2>TACHS</h2>
+
+</div>
+
+<ul>
+
+<li><a href="School.html">Home</a></li>
+<li><a href="About.html">About</a></li>
+<li><a href="Results.html">Results</a></li>
+<li><a href="Announcements.html">Announcements</a></li>
+<li><a href="Settings.html">Settings</a></li>
+
+</ul>
+
+</nav>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+<h1 class="search-title">
+Official Student Report Card
+</h1>
+
+<p class="search-sub">
+Search using Student Name or Student ID
+</p>
+
+<div class="search-area">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Enter Student Name or ID">
+
+<button id="searchBtn">
+View Report
+</button>
+
+<button
+class="home-btn"
+onclick="window.location.href='School.html'">
+
+🏠 Home
+
+</button>
+
+</div>
+
+</div>
+
+<!-- REPORT -->
+
+<div class="report" id="reportCard">
+
+<div class="header">
+
+<img
+id="pfp"
+class="pfp"
+src="https://ui-avatars.com/api/?name=Student">
+
+<div class="info">
+
+<h1 id="studentName">
+Student Name
+</h1>
+
+<p id="studentClass">
+Class
+</p>
+
+</div>
+
+</div>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Subject</th>
+<th>/100</th>
+<th>/70</th>
+<th>/30</th>
+<th>/20</th>
+
+</tr>
+
+</thead>
+
+<tbody id="subjectsBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="summary">
+
+<div class="box">
+
+<h3>Total Marks</h3>
+
+<div class="big" id="totalMarks">
+0
+</div>
+
+</div>
+
+<div class="box">
+
+<h3>Average (/20)</h3>
+
+<div class="big" id="average20">
+0
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAc902MiJ9mCbTQcJg_ViFGw0AWzi_lAvw",
+
+authDomain: "tachs-portal.firebaseapp.com",
+
+projectId: "tachs-portal",
+
+storageBucket: "tachs-portal.firebasestorage.app",
+
+messagingSenderId: "124149961599",
+
+appId: "1:124149961599:web:d175ec26571c0ce12f404a",
+
+measurementId: "G-DDPQHC3N85"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* ELEMENTS */
+
+const searchBtn =
+document.getElementById("searchBtn");
+
+const reportCard =
+document.getElementById("reportCard");
+
+/* SUBJECTS */
+
+const subjectList = [
+
+"maths",
+"english",
+"science",
+"ict",
+"physics",
+"chemistry",
+"biology",
+"history",
+"geography",
+"economics",
+"commerce",
+"literature"
+
+];
+
+/* SEARCH */
+
+searchBtn.addEventListener("click", async ()=>{
+
+const value =
+document.getElementById("searchInput")
+.value
+.trim()
+.toLowerCase();
+
+if(!value){
+
+alert("Enter Student Name or ID");
+
+return;
+
+}
+
+const snapshot =
+await getDocs(
+collection(db,"results")
+);
+
+let found = false;
+
+snapshot.forEach((doc)=>{
+
+const data = doc.data();
+
+const studentName =
+(
+data.name ||
+data.studentName ||
+""
+).toLowerCase();
+
+const studentId =
+String(
+data.studentId || ""
+).toLowerCase();
+
+if(
+studentName.includes(value)
+||
+studentId === value
+){
+
+found = true;
+
+reportCard.style.display =
+"block";
+
+/* INFO */
+
+const finalName =
+data.name ||
+data.studentName ||
+"Unknown";
+
+const finalClass =
+data.class ||
+data.studentClass ||
+"Unknown";
+
+document.getElementById(
+"studentName"
+).innerHTML =
+finalName;
+
+document.getElementById(
+"studentClass"
+).innerHTML =
+finalClass;
+
+/* PFP */
+
+document.getElementById(
+"pfp"
+).src =
+
+data.avatar ||
+
+`https://ui-avatars.com/api/?name=${finalName}`;
+
+/* SUBJECTS */
+
+let html = "";
+
+let total = 0;
+
+let count = 0;
+
+subjectList.forEach((subject)=>{
+
+const mark =
+Number(data[subject] || 0);
+
+if(mark > 0){
+
+count++;
+
+total += mark;
+
+const mark70 =
+(mark * 0.7).toFixed(1);
+
+const mark30 =
+(mark * 0.3).toFixed(1);
+
+const mark20 =
+((mark / 100) * 20)
+.toFixed(1);
+
+html += `
+
+<tr>
+
+<td class="subject-name">
+${subject.toUpperCase()}
+</td>
+
+<td>
+${mark}
+</td>
+
+<td>
+${mark70}
+</td>
+
+<td>
+${mark30}
+</td>
+
+<td>
+${mark20}
+</td>
+
+</tr>
+
+`;
+
+}
+
+});
+
+document.getElementById(
+"subjectsBody"
+).innerHTML =
+html;
+
+/* TOTAL */
+
+document.getElementById(
+"totalMarks"
+).innerHTML =
+total;
+
+/* AVERAGE */
+
+const avg20 =
+((total / count) / 100) * 20;
+
+document.getElementById(
+"average20"
+).innerHTML =
+avg20.toFixed(1);
+
+}
+
+});
+
+if(!found){
+
+reportCard.style.display =
+"none";
+
+alert("Student Not Found");
+
+}
+
+});
+
+/* SETTINGS */
+
+const themeMode =
+localStorage.getItem("themeMode") || "light";
+
+const fontSize =
+localStorage.getItem("fontSize") || "16px";
+
+const mainColor =
+localStorage.getItem("mainColor") || "#00aaff";
+
+const bgColor =
+localStorage.getItem("bgColor") || "#eef7ff";
+
+const cardStyle =
+localStorage.getItem("cardStyle") || "rounded";
+
+const animations =
+localStorage.getItem("animations") || "on";
+
+const contrastMode =
+localStorage.getItem("contrastMode") || "off";
+
+const reduceMotion =
+localStorage.getItem("reduceMotion") || "off";
+
+/* APPLY */
+
+document.documentElement.style
+.setProperty("--main-color", mainColor);
+
+document.documentElement.style
+.setProperty("--bg-color", bgColor);
+
+document.body.style.background =
+bgColor;
+
+document.body.style.fontSize =
+fontSize;
+
+if(themeMode === "dark"){
+
+document.body.classList.add("dark-mode");
+
+document.body.style.background =
+"#111";
+
+document.body.style.color =
+"white";
+
+}
+
+if(cardStyle === "square"){
+
+document.querySelectorAll(
+".container,.card,.report,.report-card,.settings-container,.section,button,input,select"
+).forEach(el=>{
+
+el.style.borderRadius = "0px";
+
+});
+
+}
+
+if(animations === "off"){
+
+document.querySelectorAll("*")
+.forEach(el=>{
+
+el.style.transition = "none";
+el.style.animation = "none";
+
+});
+
+}
+
+if(contrastMode === "on"){
+
+document.body.style.background =
+"black";
+
+document.body.style.color =
+"yellow";
+
+document.querySelectorAll(
+"button,a"
+).forEach(el=>{
+
+el.style.background =
+"yellow";
+
+el.style.color =
+"black";
+
+});
+
+}
+
+if(reduceMotion === "on"){
+
+document.documentElement.style
+.scrollBehavior = "auto";
+
+}else{
+
+document.documentElement.style
+.scrollBehavior = "smooth";
+
+}
+
+</script>
+
+</body>
+</html>

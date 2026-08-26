@@ -1,0 +1,15 @@
+{
+  "name": "tachs-school-portal",
+  "version": "1.0.0",
+  "description": "TACHS School Portal",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "TACHS",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^39.0.0"
+  }
+}

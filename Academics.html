@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACHS Academics</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#f4fbff;
+}
+
+/* NAV */
+nav{
+    background:white;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav h2{
+    color:#0099cc;
+}
+
+nav a{
+    text-decoration:none;
+    color:#333;
+    margin-left:20px;
+}
+
+/* HERO */
+.hero{
+    text-align:center;
+    padding:70px 20px;
+}
+
+.hero h1{
+    font-size:50px;
+    color:#0099cc;
+}
+
+.hero p{
+    max-width:700px;
+    margin:15px auto;
+    color:#555;
+    line-height:1.7;
+}
+
+/* GRID */
+.container{
+    padding:40px 10%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    color:#0099cc;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#555;
+    line-height:1.6;
+}
+
+/* TIMETABLE */
+.timetable{
+    padding:60px 10%;
+}
+
+.table-box{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:600px;
+}
+
+th, td{
+    padding:15px;
+    text-align:left;
+    border-bottom:1px solid #eee;
+}
+
+th{
+    background:#0099cc;
+    color:white;
+}
+
+/* FOOTER */
+footer{
+    background:#0099cc;
+    color:white;
+    text-align:center;
+    padding:30px;
+    margin-top:50px;
+}
+/* =========================================
+   LIVE CLOCK
+========================================= */
+
+.live-clock{
+background:white;
+padding:12px 20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+text-align:center;
+min-width:220px;
+}
+
+#clock{
+font-size:28px;
+font-weight:bold;
+color:#0099cc;
+}
+
+#date{
+margin-top:5px;
+font-size:14px;
+color:#666;
+}
+:root{
+    --main-color:#00aaff;
+    --bg-color:#eef7ff;
+}
+
+.dark-mode{
+    background:#111;
+    color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+<h2>TACHS</h2>
+<div>
+<a href="School.html">Home</a>
+<a href="About.html">About</a>
+<a href="Academics.html">Academics</a>
+<a href="Announcements.html">Announcements</a>
+</div>
+</nav>
+<!-- LIVE CLOCK -->
+
+<div class="live-clock">
+
+<div id="clock">
+00:00:00
+</div>
+
+<div id="date">
+Loading date...
+</div>
+
+</div>
+<!-- HERO -->
+<div class="hero">
+<h1>Academics</h1>
+<p>
+At TACHS, we offer a strong academic structure designed to help students excel in sciences, arts, and technology.
+</p>
+</div>
+
+<!-- SUBJECTS -->
+<div class="container">
+
+<div class="card">
+<h3>📘 Sciences</h3>
+<p>Mathematics, Physics, Chemistry, Biology and Computer Science.</p>
+</div>
+
+<div class="card">
+<h3>📗 Arts</h3>
+<p>Literature, History, Geography, Economics and Civics.</p>
+</div>
+
+<div class="card">
+<h3>💻 Technology</h3>
+<p>Programming, ICT, Web Development and Digital Skills.</p>
+</div>
+
+<div class="card">
+<h3>🧠 Exams</h3>
+<p>Continuous assessment, mock exams and final examinations.</p>
+</div>
+
+</div>
+
+<!-- TIMETABLE -->
+<div class="timetable">
+
+<h2 style="text-align:center;color:#0099cc;margin-bottom:20px;">
+Weekly Timetable
+</h2>
+<!-- PAGE TRANSITION LOADER -->
+
+<div id="pageLoader">
+
+<div class="transition-content">
+
+<div class="transition-logo">
+🎓
+</div>
+
+<h1>TACHS</h1>
+
+<p>Loading Page...</p>
+
+</div>
+
+</div>
+<div class="table-box">
+
+<table>
+
+<tr>
+<th>Day</th>
+<th>Morning</th>
+<th>Afternoon</th>
+</tr>
+
+<tr>
+<td>Monday</td>
+<td>Mathematics</td>
+<td>Physics</td>
+</tr>
+
+<tr>
+<td>Tuesday</td>
+<td>English</td>
+<td>Chemistry</td>
+</tr>
+
+<tr>
+<td>Wednesday</td>
+<td>Biology</td>
+<td>ICT</td>
+</tr>
+
+<tr>
+<td>Thursday</td>
+<td>History</td>
+<td>Geography</td>
+</tr>
+
+<tr>
+<td>Friday</td>
+<td>Revision</td>
+<td>Sports</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+<p>© 2026 TACHS - Academics Department</p>
+</footer>
+
+</body>
+</html>
+<script>
+
+// LIVE CLOCK
+
+function updateClock(){
+
+const now = new Date();
+
+const time =
+now.toLocaleTimeString();
+
+const date =
+now.toLocaleDateString(
+"en-US",
+{
+weekday:"long",
+year:"numeric",
+month:"long",
+day:"numeric"
+}
+);
+
+document.getElementById("clock").innerHTML =
+time;
+
+document.getElementById("date").innerHTML =
+date + " | Cameroon Time";
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+// HIDE LOADER WHEN PAGE LOADS
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+document.getElementById("pageLoader").style.opacity = "0";
+
+document.getElementById("pageLoader").style.visibility = "hidden";
+
+},800);
+
+});
+
+// SHOW LOADER WHEN CHANGING PAGE
+
+document.querySelectorAll("a").forEach(link=>{
+
+link.addEventListener("click",function(e){
+
+const href = this.getAttribute("href");
+
+if(
+href &&
+!href.startsWith("#")
+){
+
+e.preventDefault();
+
+document.getElementById("pageLoader").style.opacity = "1";
+
+document.getElementById("pageLoader").style.visibility = "visible";
+
+setTimeout(()=>{
+
+window.location.href = href;
+
+},600);
+
+}
+
+});
+
+});
+/* =========================
+   GLOBAL SETTINGS LOADER
+========================= */
+
+const themeMode =
+localStorage.getItem("themeMode") || "light";
+
+const fontSize =
+localStorage.getItem("fontSize") || "16px";
+
+const mainColor =
+localStorage.getItem("mainColor") || "#00aaff";
+
+const bgColor =
+localStorage.getItem("bgColor") || "#eef7ff";
+
+const cardStyle =
+localStorage.getItem("cardStyle") || "rounded";
+
+const animations =
+localStorage.getItem("animations") || "on";
+
+const contrastMode =
+localStorage.getItem("contrastMode") || "off";
+
+const reduceMotion =
+localStorage.getItem("reduceMotion") || "off";
+
+/* =========================
+   APPLY SETTINGS
+========================= */
+
+/* COLORS */
+
+document.documentElement.style
+.setProperty("--main-color", mainColor);
+
+document.documentElement.style
+.setProperty("--bg-color", bgColor);
+
+document.body.style.background =
+bgColor;
+
+document.body.style.fontSize =
+fontSize;
+
+/* DARK MODE */
+
+if(themeMode === "dark"){
+
+    document.body.classList.add("dark-mode");
+
+    document.body.style.background =
+    "#111";
+
+    document.body.style.color =
+    "white";
+
+    document.querySelectorAll(
+    ".container,.card,.report,.report-card,.settings-container,.section"
+    ).forEach(el=>{
+
+        el.style.background = "#1e1e1e";
+        el.style.color = "white";
+
+    });
+
+}
+
+/* CARD STYLE */
+
+if(cardStyle === "square"){
+
+    document.querySelectorAll(
+    ".container,.card,.report,.report-card,.settings-container,.section,button,input,select"
+    ).forEach(el=>{
+
+        el.style.borderRadius = "0px";
+
+    });
+
+}
+
+/* ANIMATIONS */
+
+if(animations === "off"){
+
+    document.querySelectorAll("*")
+    .forEach(el=>{
+
+        el.style.transition = "none";
+        el.style.animation = "none";
+
+    });
+
+}
+
+/* HIGH CONTRAST */
+
+if(contrastMode === "on"){
+
+    document.body.style.background =
+    "black";
+
+    document.body.style.color =
+    "yellow";
+
+    document.querySelectorAll(
+    "button,a"
+    ).forEach(el=>{
+
+        el.style.background =
+        "yellow";
+
+        el.style.color =
+        "black";
+
+    });
+
+}
+
+/* REDUCE MOTION */
+
+if(reduceMotion === "on"){
+
+    document.documentElement.style
+    .scrollBehavior = "auto";
+
+}else{
+
+    document.documentElement.style
+    .scrollBehavior = "smooth";
+
+}
+</script>

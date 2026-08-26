@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACHS Settings</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --main-color:#00aaff;
+    --bg-color:#eef7ff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:var(--bg-color);
+    padding:40px;
+    transition:0.3s;
+}
+
+.settings-container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.title{
+    text-align:center;
+    color:var(--main-color);
+    margin-bottom:35px;
+    font-size:38px;
+}
+
+/* SECTION */
+
+.section{
+    background:#f4fbff;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:30px;
+}
+
+.section h2{
+    color:var(--main-color);
+    margin-bottom:20px;
+}
+
+/* INPUTS */
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#444;
+}
+
+input,
+select{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    margin-bottom:18px;
+    background:white;
+    font-size:15px;
+}
+
+/* BUTTON */
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:var(--main-color);
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+/* NAV BUTTONS */
+
+.nav-links{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-top:35px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    background:var(--main-color);
+    color:white;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    opacity:0.9;
+}
+
+/* SAVE */
+
+.saved{
+    display:none;
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:#dfffe7;
+    color:#008844;
+    text-align:center;
+    font-weight:600;
+}
+
+/* DARK MODE */
+
+.dark-mode{
+    background:#111 !important;
+    color:white;
+}
+
+.dark-mode .settings-container{
+    background:#1e1e1e;
+}
+
+.dark-mode .section{
+    background:#2a2a2a;
+}
+
+.dark-mode label{
+    color:white;
+}
+
+.dark-mode input,
+.dark-mode select{
+    background:#333;
+    color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="settings-container">
+
+<h1 class="title">
+⚙️ TACHS SETTINGS
+</h1>
+
+<!-- USER -->
+
+<div class="section">
+
+<h2>👤 User Preferences</h2>
+
+<label>Display Name</label>
+<input type="text" id="displayName">
+
+<label>Language</label>
+<select id="language">
+<option>English</option>
+<option>French</option>
+</select>
+
+<label>Font Size</label>
+<select id="fontSize">
+<option value="14px">Small</option>
+<option value="16px">Medium</option>
+<option value="20px">Large</option>
+</select>
+
+</div>
+
+<!-- APPEARANCE -->
+
+<div class="section">
+
+<h2>🎨 Appearance</h2>
+
+<label>Theme Mode</label>
+<select id="themeMode">
+<option value="light">Light</option>
+<option value="dark">Dark</option>
+</select>
+
+<label>Main Color</label>
+<input type="color" id="mainColor" value="#00aaff">
+
+<label>Background Color</label>
+<input type="color" id="bgColor" value="#eef7ff">
+
+<label>Card Style</label>
+<select id="cardStyle">
+<option value="rounded">Rounded</option>
+<option value="square">Square</option>
+</select>
+
+<label>Animations</label>
+<select id="animations">
+<option value="on">Enabled</option>
+<option value="off">Disabled</option>
+</select>
+
+</div>
+
+<!-- RESULTS -->
+
+<div class="section">
+
+<h2>📊 Results & Reports</h2>
+
+<label>Default Search Type</label>
+<select id="searchType">
+<option value="name">Student Name</option>
+<option value="id">Student ID</option>
+</select>
+
+<label>Show Search Suggestions</label>
+<select id="showSuggestions">
+<option value="yes">Yes</option>
+<option value="no">No</option>
+</select>
+
+<label>Show Average On Reports</label>
+<select id="showAverage">
+<option value="yes">Yes</option>
+<option value="no">No</option>
+</select>
+
+<label>Show Student Pictures</label>
+<select id="showPfp">
+<option value="yes">Yes</option>
+<option value="no">No</option>
+</select>
+
+</div>
+
+<!-- ACCESSIBILITY -->
+
+<div class="section">
+
+<h2>♿ Accessibility</h2>
+
+<label>High Contrast Mode</label>
+<select id="contrastMode">
+<option value="off">Off</option>
+<option value="on">On</option>
+</select>
+
+<label>Reduce Motion</label>
+<select id="reduceMotion">
+<option value="off">Off</option>
+<option value="on">On</option>
+</select>
+
+</div>
+
+<!-- NOTIFICATIONS -->
+
+<div class="section">
+
+<h2>🔔 Notifications</h2>
+
+<label>Email Notifications</label>
+<select id="emailNotif">
+<option value="on">On</option>
+<option value="off">Off</option>
+</select>
+
+<label>Exam Alerts</label>
+<select id="examAlerts">
+<option value="on">On</option>
+<option value="off">Off</option>
+</select>
+
+</div>
+
+<!-- BUTTON -->
+
+<button id="saveBtn">
+💾 Save Settings
+</button>
+
+<div class="saved" id="savedBox">
+✅ Settings Saved Successfully
+</div>
+
+<!-- NAVIGATION -->
+
+<div class="nav-links">
+
+<a href="School.html">
+🏠 Home
+</a>
+
+<a href="Results.html">
+📊 Results
+</a>
+
+<a href="Report.html">
+📝 Report Cards
+</a>
+
+<a href="rankings.html">
+🏆 Rankings
+</a>
+
+<a href="about.html">
+ℹ️ About
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const saveBtn = document.getElementById("saveBtn");
+const savedBox = document.getElementById("savedBox");
+
+/* =========================
+   LOAD SAVED SETTINGS
+========================= */
+
+document.getElementById("displayName").value =
+localStorage.getItem("displayName") || "";
+
+document.getElementById("language").value =
+localStorage.getItem("language") || "English";
+
+document.getElementById("fontSize").value =
+localStorage.getItem("fontSize") || "16px";
+
+document.getElementById("themeMode").value =
+localStorage.getItem("themeMode") || "light";
+
+document.getElementById("mainColor").value =
+localStorage.getItem("mainColor") || "#00aaff";
+
+document.getElementById("bgColor").value =
+localStorage.getItem("bgColor") || "#eef7ff";
+
+document.getElementById("cardStyle").value =
+localStorage.getItem("cardStyle") || "rounded";
+
+document.getElementById("animations").value =
+localStorage.getItem("animations") || "on";
+
+document.getElementById("searchType").value =
+localStorage.getItem("searchType") || "name";
+
+document.getElementById("showSuggestions").value =
+localStorage.getItem("showSuggestions") || "yes";
+
+document.getElementById("showAverage").value =
+localStorage.getItem("showAverage") || "yes";
+
+document.getElementById("showPfp").value =
+localStorage.getItem("showPfp") || "yes";
+
+document.getElementById("contrastMode").value =
+localStorage.getItem("contrastMode") || "off";
+
+document.getElementById("reduceMotion").value =
+localStorage.getItem("reduceMotion") || "off";
+
+document.getElementById("emailNotif").value =
+localStorage.getItem("emailNotif") || "on";
+
+document.getElementById("examAlerts").value =
+localStorage.getItem("examAlerts") || "on";
+
+/* =========================
+   APPLY SETTINGS
+========================= */
+
+function applySettings(){
+
+    const themeMode =
+    localStorage.getItem("themeMode") || "light";
+
+    const fontSize =
+    localStorage.getItem("fontSize") || "16px";
+
+    const mainColor =
+    localStorage.getItem("mainColor") || "#00aaff";
+
+    const bgColor =
+    localStorage.getItem("bgColor") || "#eef7ff";
+
+    const cardStyle =
+    localStorage.getItem("cardStyle") || "rounded";
+
+    const animations =
+    localStorage.getItem("animations") || "on";
+
+    const contrastMode =
+    localStorage.getItem("contrastMode") || "off";
+
+    const reduceMotion =
+    localStorage.getItem("reduceMotion") || "off";
+
+    /* MAIN COLORS */
+
+    document.documentElement.style
+    .setProperty("--main-color", mainColor);
+
+    document.documentElement.style
+    .setProperty("--bg-color", bgColor);
+
+    document.body.style.fontSize =
+    fontSize;
+
+    /* DARK MODE */
+
+    if(themeMode === "dark"){
+
+        document.body.classList.add("dark-mode");
+
+    }else{
+
+        document.body.classList.remove("dark-mode");
+
+    }
+
+    /* CARD STYLE */
+
+    if(cardStyle === "square"){
+
+        document.querySelectorAll(
+        ".settings-container,.section,input,select,button,.nav-links a"
+        ).forEach(el=>{
+
+            el.style.borderRadius = "0px";
+
+        });
+
+    }else{
+
+        document.querySelectorAll(
+        ".settings-container,.section,input,select,button,.nav-links a"
+        ).forEach(el=>{
+
+            el.style.borderRadius = "";
+
+        });
+
+    }
+
+    /* ANIMATIONS */
+
+    if(animations === "off"){
+
+        document.querySelectorAll("*")
+        .forEach(el=>{
+
+            el.style.transition = "none";
+            el.style.animation = "none";
+
+        });
+
+    }
+
+    /* HIGH CONTRAST */
+
+    if(contrastMode === "on"){
+
+        document.body.style.background =
+        "black";
+
+        document.body.style.color =
+        "yellow";
+
+    }else{
+
+        document.body.style.background =
+        bgColor;
+
+        document.body.style.color =
+        "";
+
+    }
+
+    /* REDUCE MOTION */
+
+    if(reduceMotion === "on"){
+
+        document.documentElement.style
+        .scrollBehavior = "auto";
+
+    }else{
+
+        document.documentElement.style
+        .scrollBehavior = "smooth";
+
+    }
+
+}
+
+/* RUN ON PAGE LOAD */
+
+applySettings();
+
+/* =========================
+   SAVE SETTINGS
+========================= */
+
+saveBtn.addEventListener("click",()=>{
+
+    localStorage.setItem(
+    "displayName",
+    document.getElementById("displayName").value
+    );
+
+    localStorage.setItem(
+    "language",
+    document.getElementById("language").value
+    );
+
+    localStorage.setItem(
+    "fontSize",
+    document.getElementById("fontSize").value
+    );
+
+    localStorage.setItem(
+    "themeMode",
+    document.getElementById("themeMode").value
+    );
+
+    localStorage.setItem(
+    "mainColor",
+    document.getElementById("mainColor").value
+    );
+
+    localStorage.setItem(
+    "bgColor",
+    document.getElementById("bgColor").value
+    );
+
+    localStorage.setItem(
+    "cardStyle",
+    document.getElementById("cardStyle").value
+    );
+
+    localStorage.setItem(
+    "animations",
+    document.getElementById("animations").value
+    );
+
+    localStorage.setItem(
+    "searchType",
+    document.getElementById("searchType").value
+    );
+
+    localStorage.setItem(
+    "showSuggestions",
+    document.getElementById("showSuggestions").value
+    );
+
+    localStorage.setItem(
+    "showAverage",
+    document.getElementById("showAverage").value
+    );
+
+    localStorage.setItem(
+    "showPfp",
+    document.getElementById("showPfp").value
+    );
+
+    localStorage.setItem(
+    "contrastMode",
+    document.getElementById("contrastMode").value
+    );
+
+    localStorage.setItem(
+    "reduceMotion",
+    document.getElementById("reduceMotion").value
+    );
+
+    localStorage.setItem(
+    "emailNotif",
+    document.getElementById("emailNotif").value
+    );
+
+    localStorage.setItem(
+    "examAlerts",
+    document.getElementById("examAlerts").value
+    );
+
+    /* APPLY */
+
+    applySettings();
+
+    /* SHOW MESSAGE */
+
+    savedBox.style.display = "block";
+
+    setTimeout(()=>{
+
+        savedBox.style.display = "none";
+
+    },3000);
+
+});
+
+</script>
+
+</body>
+</html>

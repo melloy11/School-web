@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TACHS Results Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4fbff;
+padding:40px;
+}
+
+/* LOGIN SCREEN */
+#loginScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(135deg,#0099cc,#00aaff);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.login-box{
+background:white;
+padding:40px;
+border-radius:20px;
+width:320px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.login-box h2{
+text-align:center;
+margin-bottom:20px;
+color:#0099cc;
+}
+
+.login-box input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+background:#f4fbff;
+border-radius:10px;
+outline:none;
+}
+
+.login-box button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#00aaff;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.login-box button:hover{
+background:#0099cc;
+}
+
+.error{
+color:red;
+text-align:center;
+margin-top:10px;
+font-size:14px;
+}
+
+/* MAIN CONTAINER */
+.container{
+max-width:800px;
+margin:auto;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+display:none; /* IMPORTANT */
+}
+
+h1{
+color:#0099cc;
+margin-bottom:30px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+background:#f4fbff;
+border-radius:12px;
+font-size:16px;
+outline:none;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+background:#00aaff;
+color:white;
+font-size:18px;
+cursor:pointer;
+margin-top:20px;
+}
+
+button:hover{
+background:#0099cc;
+}
+
+.status{
+margin-top:20px;
+text-align:center;
+font-weight:bold;
+color:#0099cc;
+}
+
+#suggestions{
+position:absolute;
+background:white;
+width:100%;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+max-height:220px;
+overflow-y:auto;
+z-index:999;
+}
+
+.suggestion-item{
+padding:10px;
+cursor:pointer;
+border-bottom:1px solid #eee;
+}
+
+.suggestion-item:hover{
+background:#f4fbff;
+}
+
+.search-wrap{
+position:relative;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 LOGIN -->
+<div id="loginScreen">
+<div class="login-box">
+<h2>Admin Login</h2>
+<input type="text" id="user" placeholder="Username">
+<input type="password" id="pass" placeholder="Password">
+<button onclick="login()">Login</button>
+<div class="error" id="error"></div>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="container" id="mainApp">
+
+<h1>📊 Upload / Edit Student Results</h1>
+
+<div class="search-wrap">
+<input type="text" id="search" placeholder="Search Student Name or ID">
+<div id="suggestions"></div>
+</div>
+
+<button id="searchBtn">Search</button>
+
+<hr style="margin:20px 0;">
+
+<input type="text" id="name" placeholder="Student Name">
+<input type="text" id="studentId" placeholder="Student ID">
+<input type="text" id="class" placeholder="Class">
+
+<input type="number" id="maths" placeholder="Maths Score">
+<input type="number" id="english" placeholder="English Score">
+<input type="number" id="science" placeholder="Science Score">
+<input type="number" id="ict" placeholder="ICT Score">
+<input type="number" id="physics" placeholder="Physics Score">
+<input type="number" id="chemistry" placeholder="Chemistry Score">
+
+<button id="uploadBtn">Save / Update Results</button>
+
+<button id="deleteOneBtn" style="background:red;">
+🗑 Delete This Student Only
+</button>
+
+<div class="status" id="status"></div>
+
+<button id="clearBtn">Clear All Results</button>
+
+</div>
+
+<script>
+/* =========================
+   🔐 LOGIN
+========================= */
+function login(){
+const user = document.getElementById("user").value;
+const pass = document.getElementById("pass").value;
+const error = document.getElementById("error");
+
+if(user === "admin" && pass === "1234"){
+document.getElementById("loginScreen").style.display = "none";
+document.getElementById("mainApp").style.display = "block";
+}else{
+error.innerText = "❌ Wrong username or password";
+}
+}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+getFirestore,
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+/* =========================
+   FIREBASE
+========================= */
+const firebaseConfig = {
+apiKey: "AIzaSyAc902MiJ9mCbTQcJg_ViFGw0AWzi_lAvw",
+authDomain: "tachs-portal.firebaseapp.com",
+projectId: "tachs-portal",
+storageBucket: "tachs-portal.firebasestorage.app",
+messagingSenderId: "124149961599",
+appId: "1:124149961599:web:d175ec26571c0ce12f404a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* =========================
+   ELEMENTS
+========================= */
+const status = document.getElementById("status");
+const searchInput = document.getElementById("search");
+const suggestionsBox = document.getElementById("suggestions");
+
+/* =========================
+   DATA STORAGE
+========================= */
+let allStudents = [];
+
+/* =========================
+   LOAD STUDENTS
+========================= */
+async function loadStudents(){
+const snap = await getDocs(collection(db,"results"));
+
+allStudents = [];
+
+snap.forEach(d=>{
+const data = d.data();
+
+allStudents.push({
+id: d.id,
+name: data.name || "",
+studentId: data.studentId || "",
+class: data.class || "",
+maths: data.maths ?? 0,
+english: data.english ?? 0,
+science: data.science ?? 0,
+ict: data.ict ?? 0,
+physics: data.physics ?? 0,
+chemistry: data.chemistry ?? 0
+});
+});
+
+console.log("Loaded students:", allStudents.length);
+}
+loadStudents();
+
+/* =========================
+   SEARCH SUGGESTIONS
+========================= */
+searchInput.addEventListener("input", () => {
+
+const value = searchInput.value.toLowerCase().trim();
+suggestionsBox.innerHTML = "";
+
+if(!value){
+suggestionsBox.style.display = "none";
+return;
+}
+
+const matches = allStudents.filter(s =>
+s.name.toLowerCase().includes(value) ||
+s.studentId.toLowerCase().includes(value)
+);
+
+if(matches.length === 0){
+suggestionsBox.style.display = "none";
+return;
+}
+
+matches.slice(0, 8).forEach(student => {
+
+const div = document.createElement("div");
+div.classList.add("suggestion-item");
+
+/* SHOW FULL INFO (NAME + CLASS + SCORES) */
+div.innerHTML = `
+<strong>${student.name}</strong> (${student.studentId})<br>
+<small>
+Class: ${student.class} |
+Maths: ${student.maths} |
+English: ${student.english} |
+Science: ${student.science}
+</small>
+`;
+
+div.onclick = () => {
+
+/* fill search */
+searchInput.value = student.name;
+
+/* fill form */
+document.getElementById("name").value = student.name;
+document.getElementById("studentId").value = student.studentId;
+document.getElementById("class").value = student.class;
+
+document.getElementById("maths").value = student.maths;
+document.getElementById("english").value = student.english;
+document.getElementById("science").value = student.science;
+document.getElementById("ict").value = student.ict;
+document.getElementById("physics").value = student.physics;
+document.getElementById("chemistry").value = student.chemistry;
+
+/* hide dropdown */
+suggestionsBox.style.display = "none";
+
+status.textContent = "Student loaded ✔";
+};
+
+suggestionsBox.appendChild(div);
+});
+
+suggestionsBox.style.display = "block";
+});
+
+/* =========================
+   CLOSE DROPDOWN
+========================= */
+document.addEventListener("click", (e) => {
+if(!e.target.closest(".search-wrap")){
+suggestionsBox.style.display = "none";
+}
+});
+</script>
+
+</body>
+</html>
